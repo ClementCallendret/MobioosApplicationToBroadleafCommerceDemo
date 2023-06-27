@@ -1,0 +1,178 @@
+<div layout:decorate="~{layout/fullPageLayout}" xmlns:blc="http://www.w3.org/1999/xhtml"
+     xmlns:th="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.w3.org/1999/xhtml">
+
+    <head layout:fragment="custom-head">
+        <th:block th:include="seo/partials/seoMetaProperties" th:with="metaProperties=${#seo.getMetaProperties(product)}" />
+
+        <th:block th:include="layout/partials/head" th:with="hasMetaDesc=${true}"/>
+    </head>
+
+
+    <div layout:fragment="content">
+        <div class="product-page" th:object="${product}">
+            <div id="product_content" class="main-product js-productContainer card-product row" th:data-id="*{id}">
+                <!--Product Media images-->
+                <div class="col-sm-7 product-image-wrapper">
+                    <div class="col-sm-2 hidden-xs">
+                        <div class="up-arrow">
+                            <a href="#" class="btn btn-xs thumbnail-button-top js-thumbnailUp hidden">
+                                <i class="material-icons">keyboard_arrow_up</i>
+                            </a>
+                        </div>
+                        <div class="vertical-thumbnails js-verticalThumbnails">
+                            <ul class="nav flexi-nav vertical-thumbnails-list js-productThumbs js-verticalThumbnailsList">
+                                <li th:each="media, iterStat : *{media}" th:if="${media.key == 'primary'}"
+                                    class="active">
+                                    <a th:href="'#product-page'+${iterStat.count}" role="tab" data-toggle="tab"
+                                       aria-expanded="true"
+                                       th:attr="data-tags=${media.value.tags}">
+
+                                        <img blc:src="@{${media.value.url}}" class="img-raised" alt="Bottle Closeup"/>
+                                    </a>
+                                </li>
+
+                                <li th:each="media, iterStat : *{media}" th:unless="${media.key == 'primary'}">
+                                    <a th:href="'#product-page'+${iterStat.count}" role="tab" data-toggle="tab"
+                                       aria-expanded="false"
+                                       th:attr="data-tags=${media.value.tags}">
+
+                                        <img blc:src="@{${media.value.url}}" class="img-raised"
+                                             th:alt="${media.value.altText}"/>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="down-arrow">
+                            <a href="#" class="js-thumbnailDown thumbnail-button-bottom btn btn-xs hidden">
+                                <i class="material-icons">keyboard_arrow_down</i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-sm-10 product-main-image js-productMainImage">
+                        <div class="tab-content">
+                            <div th:each="media, iterStat : *{media}"
+                                 th:id="'product-page'+${iterStat.count}" class="tab-pane"
+                                 th:classappend="${media.key == 'primary'}? 'active'">
+                                <div class="product-card card card-blog card-plain">
+                                    <img blc:src="@{${media.value.url}}" class="img-raised img-rounded js-main-product-img"
+                                         th:alt="${media.key == 'primary'}? 'Bottle Closeup' : ${media.value.altText}"/>
+                                </div>
+                            </div>
+                            <p class="zoom-text">
+                                <i class="material-icons">zoom_in</i>
+                                <span th:utext="#{product.dragZoom}">Drag to zoom</span>
+                            </p>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="horizontal-thumbnails-container visible-xs">
+                            <div class="left-arrow">
+                                <a class="btn btn-xs js-thumbnailLeft hidden">
+                                    <i class="material-icons">keyboard_arrow_left</i>
+                                </a>
+                            </div>
+                            <div class="right-arrow">
+                                <a class="btn btn-xs js-thumbnailRight hidden">
+                                    <i class="material-icons">keyboard_arrow_right</i>
+                                </a>
+                            </div>
+                            <div class="horizontal-thumbnails js-horizontalThumbnails">
+                                <ul class="horizontal-thumbnail-list js-horizontalThumbnailsList">
+                                    <li th:each="media, iterStat : *{media}" th:if="${media.key == 'primary'}"
+                                        class="active thumbnail-item">
+                                        <a th:href="'#product-page'+${iterStat.count}" role="tab" data-toggle="tab"
+                                           th:attr="data-tags=${media.value.tags}">
+                                            <img blc:src="@{${media.value.url}}" class="img-raised img-rounded"
+                                                 alt="Bottle Closeup"/>
+                                        </a>
+                                    </li>
+
+                                    <li th:each="media, iterStat : *{media}" th:unless="${media.key == 'primary'}"
+                                        class="thumbnail-item">
+                                        <a th:href="'#product-page'+${iterStat.count}" role="tab" data-toggle="tab"
+                                           aria-expanded="false"
+                                           th:attr="data-tags=${media.value.tags}">
+
+                                            <img blc:src="@{${media.value.url}}" class="img-raised img-rounded"
+                                                 th:alt="${media.value.altText}"/>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--End Of Product Media Images-->
+
+                <!--Product Details-->
+                <div class="col-sm-5">
+                    <h3 th:utext="*{name}"></h3>
+                    <div id="maker" th:utext="*{manufacturer}"></div>
+                    <!-- Item price -->
+                    <th:block th:include="catalog/partials/productPrice"/>
+                    <!-- Promo Message -->
+                    <th:block
+                            th:with="promoMessages=${#promotion_messages.getProductPromotionMessages(product, 'PRODUCT_DETAIL')}">
+                        <div class="promotion-message" th:unless="${#lists.isEmpty(promoMessages)}">
+                            <span th:text="${promoMessages[0].message}"></span>
+                        </div>
+                    </th:block>
+                    <!-- Insert product options -->
+                    <div class="js-productOptions productOptions" th:replace="catalog/partials/productOptions"></div>
+                    <!-- Form for adding product to cart -->
+                    <!-- Section for buttons (buy now, out of stock, in cart, inventory notifications) -->
+                    <div class="row">
+                        <th:block th:include="catalog/partials/productOperations"/>
+                    </div>
+                    <!-- Social media buttons -->
+                    <th:block th:include="catalog/partials/socialMediaButtons"/>
+                    <!-- Product description -->
+                    <div id="accordion" class="panel-group" role="tablist" aria-multiselectable="true">
+                        <div class="panel panel-border panel-default">
+                            <div class="panel-heading" role="tab" id="headingOne">
+                                <a role="button" data-toggle="collapse" data-parent="#accordion"
+                                   href="#collapseOne"
+                                   aria-expanded="true" aria-controls="collapseOne">
+                                    <h4 class="panel-title">
+                                        <span th:utext="#{product.description}">Description</span>
+                                        <i class="material-icons">keyboard_arrow_down</i>
+                                    </h4>
+                                </a>
+                            </div>
+                            <div id="collapseOne" role="tabpanel" class="panel-collapse collapse in"
+                                 aria-labelledby="headingOne">
+                                <div class="panel-body" th:with="input=*{longDescription}">
+                                    <p th:utext="${#cms.fixUrl(input)}"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr/>
+
+        <div class="row">
+            <div th:include="catalog/partials/productReviews"></div>
+        </div>
+
+        <hr/>
+
+        <!-- Related products -->
+        <div class="row">
+            <div class="container">
+                <div class="related-products"
+                     th:with="relatedProducts=${#related_products.findByProduct(product.id)}">
+                    <h3 class="text-center" th:text="#{category.featuredProducts}"></h3>
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3" th:each="product : ${relatedProducts}" th:object="${product}"
+                             th:include="catalog/partials/productListItem"
+                             th:if="${product.isActive()}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

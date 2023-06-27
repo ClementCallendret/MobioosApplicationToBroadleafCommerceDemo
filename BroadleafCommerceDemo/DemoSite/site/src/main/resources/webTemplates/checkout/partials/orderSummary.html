@@ -1,0 +1,67 @@
+<div id="order_summary_section" th:fragment="order-summary">
+    <div class="cart_title">
+        <span th:utext="#{cart.orderSummary}">Order Summary</span>
+        <a id="cartLink" class="js-modalCartLink is-refreshOnClose" th:href="@{/cart}">
+            <span th:utext="#{cart.edit}">Edit</span>
+        </a>
+    </div>
+    <table id="cart_summary" class="order_summary">
+        <thead>
+        <tr>
+            <th style="width: 70px;"></th>
+            <th align="left"><span th:utext="#{cart.item}">Item</span></th>
+            <th><span th:utext="#{cart.quantity}">Quantity</span></th>
+            <th> <span th:utext="#{cart.price}">Price</span></th>
+            <th> <span th:utext="#{cart.totalSavings}">Total Savings</span></th>
+            <th><span th:utext="#{cart.total}">Total</span></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${cart.orderItems}" th:object="${item}" th:id="${'productRow' + item.id}" th:if="${item.parentOrderItem == null}">
+            <th:block th:if="${item instanceof T(org.broadleafcommerce.core.order.domain.DiscreteOrderItem)}">
+                <td>
+                    <th:block th:unless="*{#lists.isEmpty(sku.productOptionValues)}" th:each="optionValue : *{sku.productOptionValues}">
+                        <img th:if="${optionValue.attributeValue == item.sku.skuMedia['primary']?.tags}" th:src="@{*{sku.skuMedia['primary'].url} + '?thumbnail'}" width="60" th:alt="*{sku.name}" />
+                        <img th:if="${optionValue.attributeValue == item.sku.skuMedia['alt1']?.tags}" th:src="@{*{sku.skuMedia['alt1'].url} + '?thumbnail'}" width="60" th:alt="*{sku.name}" />
+                        <img th:if="${optionValue.attributeValue == item.sku.skuMedia['alt2']?.tags}" th:src="@{*{sku.skuMedia['alt2'].url} + '?thumbnail'}" width="60" th:alt="*{sku.name}" />
+                    </th:block>
+                    <img th:if="*{#lists.isEmpty(sku.productOptionValues) and sku.skuMedia['primary'] != null}" th:src="@{*{sku.skuMedia['primary']?.url} + '?thumbnail'}" width="60" th:alt="*{sku.name}" />
+                </td>
+                <td align="left">
+                    <a th:href="@{*{product.url}}" th:utext="*{product.name}"></a>
+                    <br/>
+                    <div th:replace="checkout/partials/orderItemConfigureMessaging"></div>
+                    <blc:product_option_display orderItem="${item}" >
+                        <ul th:unless="${#lists.isEmpty(productOptionDisplayValues)}" class="js-productOptions productOptions">
+                            <li th:each="entry: ${productOptionDisplayValues}">
+                                <span  th:utext="${entry.key} + ': ' + ${entry.value}"></span>
+                            </li>
+                        </ul>
+                    </blc:product_option_display>
+                    <ul th:if="${item instanceof T(org.broadleafcommerce.core.order.domain.BundleOrderItem)}">
+                        <li th:each="doi : *{discreteOrderItems}" th:utext="${doi.quantity + ' x ' + doi.name}" ></li>
+                    </ul>
+                </td>
+                <td align="center" th:utext="*{quantity}"></td>
+                <td align="center" blc:price="*{price}"></td>
+                <td align="center" th:if="*{adjustmentValue.zero}">---</td>
+
+                <td align="center" class="discount" th:unless="*{adjustmentValue.zero}" >
+                    <span  align="center"  blc:price="*{totalAdjustmentValue}" class="promotion" ></span>
+                    <div class="js-productOptions productOptions" th:replace="catalog/partials/offers :: offers"></div>
+
+                </td>
+                <td align="center" class="value" blc:price="*{totalPrice}"></td>
+            </th:block>
+            <th:block th:unless="${item instanceof T(org.broadleafcommerce.core.order.domain.DiscreteOrderItem)}">
+                <td></td>
+                <td class="name" th:text="${item.name}"></td>
+                <td align="center" th:text="${item.quantity}"></td>
+                <td align="center" blc:price="${item.price}">---</td>
+                <td align="center">---</td>
+                <td align="center" blc:price="${item.totalPrice}"></td>
+            </th:block>
+        </tr>
+        </tbody>
+    </table>
+</div>

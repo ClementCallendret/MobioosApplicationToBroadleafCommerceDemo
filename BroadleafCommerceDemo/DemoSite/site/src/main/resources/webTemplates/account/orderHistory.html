@@ -1,0 +1,42 @@
+<th:block layout:decorate="~{layout/accountLayout}" layout:fragment="content">
+    <div class="card manage-account-form-wrapper js-manageAccountFormWrapper">
+        <h3 th:utext="#{account.orders.title}">Order History</h3>
+
+        <hr />
+
+        <div id="order-history" class="card order-history" th:unless="${#lists.isEmpty(orders)}">
+            <table class="mobile-table table">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th th:utext="#{account.orders.orderNumber}"></th>
+                    <th th:utext="#{account.orders.date}"></th>
+                    <th th:utext="#{account.orders.status}"></th>
+                    <th th:utext="#{account.orders.total}" class="numeric"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <th:block th:each="order : ${orders}" th:object="${order}">
+                    <tr class="js-orderHistoryRow" th:attr="data-order-number=*{orderNumber}">
+                        <td th:data-title="#{account.orders.orderNumber}">
+                            <a class="view-order-details-action js-viewOrderDetails" th:href="@{/account/orders/} + *{orderNumber}">
+                                <i class="material-icons js-downArrow">keyboard_arrow_down</i>
+                                <i class="material-icons js-upArrow is-hidden">keyboard_arrow_up</i>
+                            </a>
+                        </td>
+                        <td th:data-title="#{account.orders.orderNumber}" th:utext="*{orderNumber}"></td>
+                        <td th:data-title="#{account.orders.date}" th:utext="*{#dates.format(submitDate, 'MM-dd-yyyy')}"></td>
+                        <td th:data-title="#{account.orders.status}" th:utext="*{status.friendlyType}"></td>
+                        <td th:data-title="#{account.orders.total}" class="numeric" blc:price="*{total}"></td>
+
+                    </tr>
+
+                    <tr class="order-details-row js-orderDetailsRow is-hidden"><td colspan="6"></td></tr>
+                </th:block>
+                </tbody>
+            </table>
+        </div>
+
+        <p th:if="${#lists.isEmpty(orders)}" th:utext="#{account.orders.noOrders}">You have not placed any orders.</p>
+    </div>
+</th:block>

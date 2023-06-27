@@ -1,0 +1,24 @@
+<div id="review">
+    <h4 class="title" th:utext="#{review.shareYourOpinion}">Share Your Opinion</h4>
+    <blc:form action="#" id="new-rating-form"
+              th:attr="data-action=@{'/reviews/product/' + ${product.id}}" onsubmit="return false;">
+        <div class="rate-product">
+            <label>&nbsp;<span th:utext="#{review.rating}">Rating</span></label>
+            <input type="radio" class="star" name="rating" value="1"/>
+            <input type="radio" class="star" name="rating" value="2"/>
+            <input type="radio" class="star" name="rating" value="3"/>
+            <input type="radio" class="star" name="rating" value="4"/>
+            <input type="radio" class="star" name="rating" value="5"/>
+        </div>
+        <div class="form-group label-floating">
+            <label class="control-label" th:utext="#{review.review}">Review</label>
+            <span class="text-danger"></span>
+            <textarea name="reviewText" type="text" class="form-control" rows="4"></textarea>
+        </div>
+        <button class="js-submitReview btn btn-primary" type="submit" th:utext="#{review.submit}">
+            Submit Review
+        </button>
+        <span class="text-danger review-status-bottom" style="display: none;"
+              th:utext="#{review.selectRating}">You must select a rating.</span>
+    </blc:form>
+</div>

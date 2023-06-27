@@ -1,0 +1,28 @@
+<th:block layout:decorate="~{layout/accountLayout}" layout:fragment="content">
+    <div class="card manage-account-form-wrapper js-manageAccountFormWrapper">
+        <h3 th:utext="#{account.options.title}">Update Account Information</h3>
+        <hr />
+        <div class="col-sm-9 col-md-6">
+
+            <p class="success" th:if="${successMessage}" th:utext="${successMessage}"></p>
+             <blc:form class="account-form" action="#" th:action="@{/account}" th:object="${updateAccountForm}" method="POST">
+                <div class="form-group label-floating error-group" th:classappend="${#fields.hasErrors('emailAddress')}? 'has-error'">
+                    <label class="control-label" for="emailAddress" th:utext="#{account.options.email}">Email Address</label>
+                    <input class="form-control" type="email" name="emailAddress" id="emailAddress" th:field="*{emailAddress}" />
+                    <span class="text-danger" th:each="err : ${#fields.errors('emailAddress')}" th:utext="${err}"></span>
+                </div>
+                <div class="form-group label-floating error-group" th:classappend="${#fields.hasErrors('firstName')}? 'has-error'">
+                    <label class="control-label" for="firstName" th:utext="#{account.options.firstName}">First Name</label>
+                    <input class="form-control" type="text" name="firstName" id="firstName" th:field="*{firstName}" th:classappend="${#fields.hasErrors('firstName')}? 'fieldError'"/>
+                    <span class="text-danger" th:each="err : ${#fields.errors('firstName')}" th:utext="${err}"></span>
+                </div>
+                <div class="form-group label-floating error-group" th:classappend="${#fields.hasErrors('lastName')}? 'has-error'">
+                    <label class="control-label" for="lastName" th:utext="#{account.options.lastName}">Last Name</label>
+                    <input class="form-control" type="text" name="lastName" id="lastName" th:field="*{lastName}" th:classappend="${#fields.hasErrors('lastName')}? 'fieldError'"/>
+                    <span class="text-danger" th:each="err : ${#fields.errors('lastName')}" th:utext="${err}"></span>
+                </div>
+                <button type="submit" class="pull-right btn btn-primary" th:utext="#{account.options.submit}">Submit</button>
+            </blc:form>
+        </div>
+    </div>
+</th:block>

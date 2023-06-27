@@ -1,0 +1,21 @@
+<div id="accordion" class="panel-group cart-account-credit-row card checkout-card accordion-checkout-card"
+     role="tablist" aria-multiselectable="true">
+    <div class="panel panel-border panel-default">
+        <div class="panel-heading" role="tab" id="headingTwo">
+            <a role="button" data-toggle="collapse" data-parent="#accordion"
+               href="#collapseTwo" aria-controls="collapseTwo">
+                <h4 class="panel-title cart-account-credit-title">
+                    <span th:utext="#{cart.accountCredit}">Gift Cards and Customer Credit</span>
+                    <i class="material-icons">keyboard_arrow_down</i>
+                </h4>
+            </a>
+        </div>
+        <div id="collapseTwo" role="tabpanel" class="panel-collapse collapse" aria-labelledby="headingTwo">
+            <div class="panel-body">
+                <div th:include="checkout/partials/applyGiftCard"></div>
+
+                <div th:include="checkout/partials/applyCreditForm"></div>
+            </div>
+        </div>
+    </div>
+</div>

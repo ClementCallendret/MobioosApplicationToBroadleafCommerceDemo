@@ -1,0 +1,128 @@
+<footer class="group" blc:cache="true">
+
+    <div class="col-md-4">
+        <nav>
+            <ul>
+                <li><a href="/about_us"><span th:utext="#{footer.aboutUs}">About Us</span></a></li>
+                <li><a href="/contactus"><span th:utext="#{footer.contact}">Contact Us</span></a></li>
+                <li><a href="#"><span th:utext="#{footer.privacyPolicy}">Privacy Policy</span></a></li>
+            </ul>
+        </nav>
+    </div>
+    <div class="col-md-4">
+        <div>
+        <div class="blc-brand">
+            <p>Powered by&nbsp;</p>
+            <img th:src="@{/img/broadleaf-seal.png}" alt="Broadleaf Commerce" />
+            <p>&copy; Copyright 2021</p>
+        </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="site-social-media-mobile">
+            <a href="https://www.facebook.com/BroadleafCommerce" class="btn btn-simple btn-facebook">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+            <a href="https://www.instagram.com/broadleaf_commerce/" class="btn btn-simple btn-instagram">
+                <i class="fa fa-instagram"></i>
+            </a>
+            <a href="https://www.linkedin.com/company/broadleafcommerce" class="btn btn-simple btn-linkedin">
+                <i class="fa fa-linkedin"></i>
+            </a>
+            <a href="https://twitter.com/broadleaf" class="btn btn-simple btn-twitter">
+                <i class="fa fa-twitter"></i>
+            </a>
+            <a href="https://www.youtube.com/user/broadleafopensource" class="btn btn-simple btn-youtube">
+                <i class="fa fa-youtube-play"></i>
+            </a>
+        </div>
+    </div>
+
+    <div th:remove="all">
+        <!--
+            Include this template at the bottom of a page (automatically included by partials/footer.html
+            to gain access to jQuery and other plugins used throughout the site.
+
+            We will attempt to load the jQuery library from Google's CDN, but fallback on our own provided
+            jQuery if necessary.
+
+            Other than this jQuery loading script, no other scripts should be defined inline.
+        -->
+    </div>
+
+    <!-- Library JS Files -->
+    <blc:bundle name="lib.js"
+                mapping-prefix="/js/"
+                files="libs/jquery-3.1.1.min.js,
+                       libs/jquery.dotdotdot-1.5.1.js,
+                       libs/toastr.js,
+                       libs/jquery.rating.pack.js,
+                       libs/jquery.zoom.min.js,
+                       libs/jquery.MetaData.js,
+                       libs/material-kit/bootstrap.min.js,
+                       libs/material-kit/material.min.js,
+                       libs/material-kit/moment.min.js,
+                       libs/material-kit/nouislider.min.js,
+                       libs/material-kit/bootstrap-datetimepicker.js,
+                       libs/material-kit/bootstrap-selectpicker.js,
+                       libs/material-kit/bootstrap-tagsinput.js,
+                       libs/material-kit/atv-img-animation.js,
+                       libs/material-kit/material-kit.js,
+                       libs/material-kit/jquery.flexisel.js"/>
+
+    <!-- Heat Clinic JS Files -->
+    <blc:bundle name="heatclinic.js"
+                mapping-prefix="/js/"
+                files="BLC.js,
+                       blc-dates.js,
+                       heatClinicOperations.js,
+                       heatClinicEventHandlers.js,
+                       heatClinic-uncacheableData.js,
+                       samplePaymentService.js,
+                       cartOperations.js,
+                       cartEventHandlers.js,
+                       checkoutOperations.js,
+                       checkoutEventHandlers.js,
+                       globalOnReady.js,
+                       globalOnReadyEventHandlers.js,
+                       accountManagementEventHandlers.js,
+                       accountManagementOperations.js,
+                       loginRegisterEventHandlers.js,
+                       loginRegisterOperations.js,
+                       productPageEventHandlers.js,
+                       productPageOperations.js,
+                       reviewOperations.js,
+                       reviewEventHandlers.js,
+                       jssor.slider-20.min.js,
+                       categoryFilter.js" />
+
+    <blc:widget-js></blc:widget-js>
+
+    <!-- Sandboxing JS Files -->
+    <th:block th:if="${#brc.sandboxMode}">
+        <a id="adminDeepLink" th:unless="${#strings.isEmpty(adminDeepLink?.fullUrl)}" th:href="@{${adminDeepLink.fullUrl}}" ></a>
+        <blc:bundle name="sandbox.js"
+                    mapping-prefix="/js/"
+                    files="sandbox-client.js,
+                           deepLink.js,
+                           enterpriseSearch-site.js,
+                           lib/plugins/jquery-ui-1.10.2.custom.js,
+                           lib/plugins/jquery-ui-timepicker-addon.js" />
+    </th:block>
+
+    <!-- CSR Mode JS Files -->
+    <th:block th:if="${#brc.csrMode}">
+        <blc:bundle name="csr.js"
+                    mapping-prefix="/js/"
+                    files="csr-client.js" />
+
+        <th:block th:if="${#module.isPresent('OMS')}">
+            <blc:bundle name="oms-csr.js"
+                        mapping-prefix="/js/"
+                        files="oms-csr-client.js" />
+        </th:block>
+    </th:block>
+
+</footer>
+
+<blc:uncacheableData></blc:uncacheableData>

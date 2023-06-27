@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+
+<head th:include="layout/partials/head (pageTitle='Broadleaf Commerce Demo Store - Heat Clinic')"></head>
+
+<body th:class="${'locale-' + session.blLocale.localeCode}">
+    <th:block th:replace="layout/partials/nav" />
+
+    <div class="main">
+        <div class="container-fluid">
+
+            <div class="row">
+                <a th:href="@{/merchandise}">
+                    <img class="img-responsive full-width" blc:src="@{/cmsstatic/img/banners/shirt-special.jpg}" />
+                </a>
+            </div>
+
+            <div class="container">
+
+                <div class="row text-center">
+                    <div id="home_feature">
+                        <h2>HOT SAUCE AFICIONADO?</h2> Create an account to join our Heat Clinic Frequent Care Program. The place to get all the deals on burn treatment.
+                    </div>
+                </div>
+
+                <hr />
+
+                <div class="row">
+                    <h3 class="text-center">
+                        The Heat Clinic's Top Selling Sauces
+                    </h3>
+
+                    <th:block th:if="${products}" id="products" class="group" th:each="product : ${products}" th:object="${product}" >
+                        <div class="col-sm-6 col-md-3"  th:if="${product.isActive()}"
+                             th:include="catalog/partials/productListItem">
+                        </div>
+                    </th:block>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <th:block layout:fragment="post-content" />
+
+    <footer th:replace="layout/partials/footer"></footer>
+</body>
+</html>

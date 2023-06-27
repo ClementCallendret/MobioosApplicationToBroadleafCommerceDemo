@@ -1,0 +1,52 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head></head>
+
+<body>
+    <th:block th:fragment="search-facet-filter">
+        <div class="card card-refine card-plain">
+            <div class="card-content">
+                <div th:include="catalog/partials/productSortOptions"></div>
+                <h4 class="card-title" th:utext="#{category.filterResults}"> </h4>
+                <!-- Active facets -->
+                <div th:each="facetDto,iter : ${facets}"  class="panel panel-default filter-panel js-filter-panel">
+                    <input type="hidden" th:if="${originalQuery}" name="q" th:value="${originalQuery}" />
+                    <input type="hidden" name="facetField" th:value="${facetDto.facet.field.abbreviation}" />
+                    <div th:id="'heading'+*{iter.index}" class="panel-heading " th:classappend="*{iter.first}? 'override-top-padding ' : ' '" role="tab">
+                        <a th:classappend="${facetDto.active}? ' ': 'collapsed' " class="collapsed" role="button" data-toggle="collapse"
+                           data-parent="#accordian" th:href="'#collapse'+*{iter.index}"
+                           th:aria-expanded="${facetDto.active}" th:aria-controls="'collapse'+*{iter.index}">
+                            <h4 class="panel-title" th:utext="${facetDto.facet.label}"></h4>
+                            <i class="material-icons">keyboard_arrow_down</i>
+                        </a>
+                    </div>
+                    <div th:id="'collapse'+*{iter.index}" class="panel-collapse"
+                         th:classappend="${facetDto.active}? ' collapse in': ' collapse' "
+                         role="tabpanel"
+                         th:aria-labelledby="'heading'+*{iter.index}" th:aria-expanded="${facetDto.active}">
+                        <div class="panel-body">
+                            <!-- Active facet values -->
+                            <th:block th:each="facetValue : ${facetDto.facetValues}" th:if="${facetValue.active}">
+                                <div class="checkbox" th:if="${facetValue.quantity > 0}">
+                                    <!-- Facet Value display fragment -->
+                                    <label th:replace="~{catalog/partials/facetValueDisplay :: facet-value-display}"></label>
+                                </div>
+                            </th:block>
+
+                            <!-- Inactive facet valuess -->
+                            <th:block th:each="facetValue : ${facetDto.facetValues}" th:unless="${facetValue.active}">
+                                <div class="checkbox" th:if="${facetValue.quantity > 0}">
+                                    <!-- Facet Value display fragment -->
+                                    <label th:replace="~{catalog/partials/facetValueDisplay :: facet-value-display}"></label>
+                                </div>
+                            </th:block>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </th:block>
+</body>
+
+</html>

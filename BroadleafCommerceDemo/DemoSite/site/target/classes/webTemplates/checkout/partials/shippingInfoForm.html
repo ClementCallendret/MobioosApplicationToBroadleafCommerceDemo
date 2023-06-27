@@ -1,0 +1,23 @@
+<div id="shipping_info_stage" th:fragment="read-only-shipping-info-form">
+
+    <th:block th:if="${#fulfillment.getNumShippableFulfillmentGroups() > 1}">
+        <table th:replace="~{checkout/partials/multiShipInfoForm :: read-only-multiship-info-form}"></table>
+    </th:block>
+
+    <th:block th:unless="${#fulfillment.getNumShippableFulfillmentGroups() > 1}">
+        <div th:replace="~{checkout/partials/singleShipInfoForm :: read-only-singleship-info-form}"></div>
+    </th:block>
+
+</div>
+
+<div id="shipping_info_stage" th:fragment="shipping-info-form">
+
+    <th:block th:if="${#fulfillment.getNumShippableFulfillmentGroups() > 1}">
+        <table th:replace="~{checkout/partials/multiShipInfoForm :: multiship-info-form}"></table>
+    </th:block>
+
+    <th:block th:unless="${#fulfillment.getNumShippableFulfillmentGroups() > 1}">
+        <div th:replace="~{checkout/partials/singleShipInfoForm :: singleship-info-form}"></div>
+    </th:block>
+
+</div>

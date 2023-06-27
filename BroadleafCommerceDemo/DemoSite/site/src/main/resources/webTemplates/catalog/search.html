@@ -1,0 +1,59 @@
+<th:block layout:decorate="~{layout/fullPageLayout}">
+    <head>
+        <title>Search</title>
+    </head>
+
+    <div layout:fragment="content" id="search" class="ecommerce-page" th:fragment="ajax">
+
+        <th:block blc:cache="true" cacheSearch="true">
+
+            <!-- Search Title -->
+            <div class="row">
+                <div id="category-search-title" class="container show-bottom-border">
+                    <h2 class="section-title" th:unless="${#strings.isEmpty(originalQuery)}" th:inline="text">
+                        <span th:utext="#{search.results}">
+                            Search Results
+                        </span>
+                    </h2>
+
+                    <span class="small-text pull-right page-results-counter" th:if="${result}">
+                        ([[${result.startResult}]] - [[${result.endResult}]]
+                        <span th:utext="#{search.of}">of</span>
+                        [[${result.totalResults}]])
+                    </span>
+                </div>
+            </div>
+
+            <div id="category-search-content" class="category-search-content container">
+
+                <!-- Product Filters -->
+                <div id="left_column" class="left-column col-md-3">
+                    <div id="options" class="ecommerce-page">
+                        <div th:include="catalog/partials/facetFilter"></div>
+                        <div class="js-rightHandBannerAdsPlaceholder"></div>
+                    </div>
+                </div>
+
+
+                <!-- Product List -->
+                <div class="col-md-9" id="right_column" blc:cache="true" cacheCategory="true">
+                    <div th:if="${products}" id="products" class="products row">
+                        <div th:each="product : ${products}" th:object="${product}"
+                             th:include="catalog/partials/productListItem" class="col-md-4"></div>
+                    </div>
+
+                    <ul th:if="${skus}" id="products" class="products js-products group">
+                        <li th:each="sku : ${skus}" th:object="${sku}" th:include="catalog/partials/skuListItem"
+                            class="js-productContainer productContainer"></li>
+                    </ul>
+
+                    <div th:include="catalog/partials/productPagingOptions"></div>
+
+                </div>
+
+            </div>
+
+        </th:block>
+    </div>
+    <div layout:fragment="post-content" th:replace="catalog/partials/rightHandBannerAds"></div>
+</th:block>
