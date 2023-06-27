@@ -31,8 +31,7 @@ Ce projet se base sur la démo de Broadleaf Commerce : https://github.com/Broadl
 
 6. Cliquer dans la barre verticale à gauche sur le M de Mobioos Forge Explorer
 
-7. Faire "Open Project" et cliquer sur le dossier de ce projet
-8. Un onglet nommé "BroadleafCommerce" apparait
+7. Un onglet nommé "BroadleafCommerce" apparait
 
 ------------------------------------------------------------------------------------------------------
 
@@ -42,7 +41,7 @@ Dans l'onglet Mobioos Forge Explorer, clique droit sur "BroadleafCommerce" -> MF
 ![ImageCustomSCenarios](ReadmeImages/ReadmeImagesDiagramme.png)
 
 ### Voir le mappage des fichiers :
-Aller à BroadleafCommerce -> DemoSite -> site -> src\main et cliquer sur des fichiers. 
+Aller à BroadleafCommerce -> DemoSite -> site -> src\main et cliquer sur des fichiers fils. 
 - pas de couleur = pas mappé (car essentiel ou pas d'importance côté utilisateur mais potentiellement inutilisé dans certains variants)
 - une couleur = mappé, mettre la souris dessus et le nom de la feature correspondante à ce code apparaît.
 
@@ -54,30 +53,37 @@ Aller à BroadleafCommerce -> DemoSite -> site -> src\main et cliquer sur des fi
 (Certaines options dépendent d'autres, comme "Login" et "Customer Account Informations", donc si vous en voulez une, l'autre ce cochera automatiquement.)
 ![ImageCustomVariant](ReadmeImages/ReadmeImagesCustomVariant.png)
 4. Cliquer sur "Save"
+. Parfois Mobioos n'arrive pas à supprimer le variant précédent qui a le même nom. Pour le supprimer aller à
+    ```
+    Users\VotreUsername\mobioos-forge-customizations
+    ```
 
 
 
 5. Cliquer sur "Generate" : 2 possibilités en fonction de ce que vous avez choisi ci-dessus:
     - Si vous voulez votre variant sur une branche Github, verifier que votre branche actuel est Commit. Ecrire le nom de la branche qui va être créée et attendre que le variant soit push. (Ne pas se fier à la notification qui dit que c'est en cours de push, aller voir directement sur votre navigateur si c'est bon).
     Aller sur la branche voulu (rafraichir les infos de github pour faire apparaitre la branche sur Vscode)
-    -  Si vous voulez votre variant en local, appuyer sur Echap quand le nom de la branche est demandée. Cliquer sur la pop up à droite qui propose d'ouvrir le projet créé dans Vscode. Le variant est par défaut stocké à Users\VotreUsername\mobioos-forge-customizations
-
-8. Maintenant le variant créé :
-- Soit ouvrer un terminal et entrer :
-    ```shell
-    cd DemoSite ; mvn clean install ; cd site ; mvn spring-boot:run ; mvn spring-boot:run ; mvn spring-boot:run
+    -  Si vous voulez votre variant en local, appuyer sur Echap quand le nom de la branche est demandée. Cliquer sur la pop up à droite qui propose d'ouvrir le projet créé dans Vscode. Le variant est par défaut stocké à 
     ```
-- Soit aller dans le répertoire "DemoSite", ouvrer un terminal et lancer la compilation avec 
-    ```shell
-    mvn clean install
-    ``` 
-    (Il est possible qu'elle échoue, relancer là le cas échéant. Si après plusieurs tentatives elle continue d'échouer, tenter de passer à la suite, parfois ça se lance quand même).
-
-    Aller dans le dossier "site" et lancer dans un terminal :
-    ```shell
-    mvn spring-boot:run 
+    Users\VotreUsername\mobioos-forge-customizations
     ```
-    (Si vous arrêter le programme avec un Ctrl + C le port reste ouvert, donc quand vous aller essayer de le relancer une erreur apparaitra, ce n'est pas grave, relancer la commande une nouvelle fois, 3 fois max).
+
+8. Maintenant le variant créé il y a 2 options :
+    - Rapide : Ouvrir un terminal et entrer :
+        ```shell
+        cd DemoSite ; mvn clean install ; cd site ; mvn spring-boot:run ; mvn spring-boot:run ; mvn spring-boot:run
+        ```
+    - Par étapes : aller dans le répertoire "DemoSite", ouvrer un terminal et lancer la compilation avec 
+        ```shell
+        mvn clean install
+        ``` 
+        (Il est possible qu'elle échoue, relancer là le cas échéant. Si après plusieurs tentatives elle continue d'échouer, tenter de passer à la suite, parfois ça se lance quand même).
+
+        Aller dans le dossier "site" et lancer dans un terminal :
+        ```shell
+        mvn spring-boot:run 
+        ```
+        (Si vous arrêter le programme avec un Ctrl + C le port reste ouvert, donc quand vous aller essayer de le relancer une erreur apparaitra, ce n'est pas grave, relancer la commande une nouvelle fois, 3 fois max).
 
 8. Attendre que le lancement soit fini (20 à 50s)
 ![ImageStarted](ReadmeImages/ReadmeImagesStarted.png)
@@ -95,6 +101,7 @@ Aller à BroadleafCommerce -> DemoSite -> site -> src\main et cliquer sur des fi
 10. Shutdown le serveur :
 
     Ctrl + C dans le terminal[.](r.mtdv.me/BroadleafCommerceDocumentation)
+    Puis confirmer.
 
 
 
