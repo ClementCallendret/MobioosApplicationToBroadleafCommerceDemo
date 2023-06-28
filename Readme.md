@@ -110,6 +110,6 @@ Go to BroadleafCommerce -> DemoSite -> site -> src\main and click on individual 
     For connecting elsewhere, see the other ports on [the Broadleaf Commerce Demo GitHub](https://github.com/BroadleafCommerce/DemoSite#active-ports)
 10. Shutdown the server:
 
-    Ctrl + C in the terminal[.](r.mtdv.me/BroadleafCommerceDocumentation)
+    Ctrl + C in the terminal[.](https://r.mtdv.me/BroadleafCommerceDocumentation)
 
     Then don't forget to confirm.
